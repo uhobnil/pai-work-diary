@@ -1,0 +1,77 @@
+{
+  "name": "pai-work-diary",
+  "displayName": "pai work diary",
+  "description": "pai work diary",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.84.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "activationEvents": [
+    "*"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "工作日志",
+      "type": "object",
+      "properties": {
+        "work-diary.token": {
+          "type": "string",
+          "default": "",
+          "description": "设置gitlab personal access tokens"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "work-diary.view",
+        "title": "work diary view"
+      },
+      {
+        "command": "work-diary.config",
+        "title": "work diary config"
+      },
+      {
+        "command": "work-diary.submit",
+        "title": "提交",
+        "icon": "$(git-commit)"
+      }
+    ],
+    "menus": {
+      "editor/title": [
+        {
+          "command": "work-diary.submit",
+          "group": "navigation",
+          "when": "resourceFilename == work-diary.md"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "yarn run compile && yarn run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.3",
+    "@types/node": "18.x",
+    "@types/vscode": "^1.84.0",
+    "@typescript-eslint/eslint-plugin": "^6.9.0",
+    "@typescript-eslint/parser": "^6.9.0",
+    "@vscode/test-electron": "^2.3.6",
+    "eslint": "^8.52.0",
+    "glob": "^10.3.10",
+    "mocha": "^10.2.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
+    "@urql/core": "^4.1.4",
+    "graphql": "^16.8.1"
+  }
+}
