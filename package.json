@@ -48,10 +48,32 @@
           "when": "resourceFilename == work-diary.md"
         }
       ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "work-diary-view",
+          "title": "PAI work diary",
+          "icon": "$(tasklist)"
+        }
+      ]
+    },
+    "views": {
+      "work-diary-view": [
+        {
+          "type": "webview",
+          "id": "work-diary-sidebar",
+          "name": "PAI work diary",
+          "icon": "$(tasklist)",
+          "contextualTitle": "PAI work diary"
+        }
+      ]
     }
   },
   "scripts": {
     "vscode:prepublish": "yarn run compile",
+    "webview-dev": "vite serve webview",
+    "webview-build": "vue-tsc --noEmit && vite build webview --emptyOutDir",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "yarn run compile && yarn run lint",
@@ -59,19 +81,25 @@
     "test": "node ./out/test/runTest.js"
   },
   "devDependencies": {
+    "@babel/types": "^7.23.3",
+    "@rollup/rollup-darwin-arm64": "^4.5.0",
     "@types/mocha": "^10.0.3",
     "@types/node": "18.x",
     "@types/vscode": "^1.84.0",
     "@typescript-eslint/eslint-plugin": "^6.9.0",
     "@typescript-eslint/parser": "^6.9.0",
+    "@vitejs/plugin-vue": "^4.5.0",
     "@vscode/test-electron": "^2.3.6",
     "eslint": "^8.52.0",
     "glob": "^10.3.10",
     "mocha": "^10.2.0",
-    "typescript": "^5.2.2"
+    "typescript": "^5.2.2",
+    "vite": "^5.0.0",
+    "vue-tsc": "^1.8.22"
   },
   "dependencies": {
     "@urql/core": "^4.1.4",
-    "graphql": "^16.8.1"
+    "graphql": "^16.8.1",
+    "vue": "^3.3.8"
   }
 }

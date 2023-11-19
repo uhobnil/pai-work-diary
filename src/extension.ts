@@ -1,15 +1,24 @@
 import * as vscode from "vscode";
 // import { BaseView } from "./View";
 import { BaseView } from "./View";
+import { SidebarProvider } from "./SidebarProvider";
 import { StatusBarItem } from "./StatusBarItem";
 
 export function activate(context: vscode.ExtensionContext) {
   const baseView = new BaseView();
+  const sidebarProvider = new SidebarProvider(context.extensionUri);
   const statusBarItem = new StatusBarItem();
 
   context.subscriptions.push(statusBarItem);
 
   context.subscriptions.push(baseView);
+
+  context.subscriptions.push(
+    vscode.window.registerWebviewViewProvider(
+      SidebarProvider.viewType,
+      sidebarProvider
+    )
+  );
 
   context.subscriptions.push(
     vscode.commands.registerCommand("work-diary.config", async () => {
