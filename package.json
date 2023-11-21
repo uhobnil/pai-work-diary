@@ -48,6 +48,25 @@
           "when": "resourceFilename == work-diary.md"
         }
       ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "work-diary-view",
+          "title": "PAI work diary",
+          "icon": "$(tasklist)"
+        }
+      ]
+    },
+    "views": {
+      "work-diary-view": [
+        {
+          "id": "task-list-view",
+          "name": "Task List",
+          "icon": "$(tasklist)",
+          "contextualTitle": "PAI work diary"
+        }
+      ]
     }
   },
   "scripts": {

@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 // import { BaseView } from "./View";
 import { BaseView } from "./View";
 import { StatusBarItem } from "./StatusBarItem";
+import { TaskProvider } from "./TaskProvider";
 
 export function activate(context: vscode.ExtensionContext) {
   const baseView = new BaseView();
@@ -10,6 +11,17 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(statusBarItem);
 
   context.subscriptions.push(baseView);
+
+  vscode.window.registerTreeDataProvider(
+    TaskProvider.viewType,
+    new TaskProvider(vscode.workspace.rootPath)
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("work-diary.task.view", (url) => {
+      vscode.env.openExternal(url);
+    })
+  );
 
   context.subscriptions.push(
     vscode.commands.registerCommand("work-diary.config", async () => {
