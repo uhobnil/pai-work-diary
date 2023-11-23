@@ -90,7 +90,7 @@ async function get_project_ids(token, id) {
 
 async function get_project_commits(token, id, username) {
   const response = await fetch(
-    `${base}/api/v4/projects/${id}/repository/commits?since=${get_today()}&author=${username}`,
+    `${base}/api/v4/projects/${id}/repository/commits?since=${get_today()}&author=${username}&all=true`,
     {
       headers: {
         Accept: "application/json, application/xml, text/plain, text/html, *.*",
