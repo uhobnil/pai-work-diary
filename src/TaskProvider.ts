@@ -5,6 +5,11 @@ export class TaskProvider implements vscode.TreeDataProvider<TaskItemNode> {
   public static readonly viewType = "task-list-view";
   private token: string = "";
 
+  private _onDidChangeTreeData: vscode.EventEmitter<void> =
+    new vscode.EventEmitter<void>();
+  readonly onDidChangeTreeData: vscode.Event<void> =
+    this._onDidChangeTreeData.event;
+
   constructor(private workspaceRoot: string) {
     this.setToken();
   }
@@ -14,6 +19,10 @@ export class TaskProvider implements vscode.TreeDataProvider<TaskItemNode> {
     if (config && config.token) {
       this.token = config.token;
     }
+  }
+
+  refresh(): void {
+    this._onDidChangeTreeData.fire();
   }
 
   getTreeItem(element: TaskItemNode): vscode.TreeItem {

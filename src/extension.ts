@@ -7,14 +7,18 @@ import { TaskProvider } from "./TaskProvider";
 export function activate(context: vscode.ExtensionContext) {
   const baseView = new BaseView();
   const statusBarItem = new StatusBarItem();
+  const taskProvider = new TaskProvider(vscode.workspace.rootPath);
 
   context.subscriptions.push(statusBarItem);
 
   context.subscriptions.push(baseView);
 
-  vscode.window.registerTreeDataProvider(
-    TaskProvider.viewType,
-    new TaskProvider(vscode.workspace.rootPath)
+  vscode.window.registerTreeDataProvider(TaskProvider.viewType, taskProvider);
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("work-diary.refresh", (url) => {
+      taskProvider.refresh();
+    })
   );
 
   context.subscriptions.push(

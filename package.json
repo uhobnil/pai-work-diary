@@ -36,8 +36,13 @@
       },
       {
         "command": "work-diary.submit",
-        "title": "提交",
+        "title": "commit",
         "icon": "$(git-commit)"
+      },
+      {
+        "command": "work-diary.refresh",
+        "title": "refresh",
+        "icon": "$(refresh)"
       }
     ],
     "menus": {
@@ -46,6 +51,13 @@
           "command": "work-diary.submit",
           "group": "navigation",
           "when": "resourceFilename == work-diary.md"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "work-diary.refresh",
+          "group": "navigation",
+          "when": "view == task-list-view"
         }
       ]
     },
