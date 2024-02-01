@@ -113,6 +113,7 @@ class Issue {
 
 export class BaseView {
   private token: string = "";
+  private statusBarItem = null;
 
   constructor() {
     this.setToken();
@@ -158,23 +159,25 @@ export class BaseView {
 
     const vscodeInstallDir = path.dirname(vscode.env.appRoot);
     const diaryPath = path.join(vscodeInstallDir, "work-diary.md");
-    fs.writeFile(diaryPath, tempContent, function (err) {
+    fs.writeFile(diaryPath, tempContent, (err) => {
       if (err) {
         vscode.window.showErrorMessage("Failed to create work diary file.");
       } else {
         vscode.workspace.openTextDocument(diaryPath).then((document) => {
           vscode.window.showTextDocument(document);
         });
-        const statusBarItem = vscode.window.createStatusBarItem(
-          vscode.StatusBarAlignment.Right,
-          999999
-        );
-        statusBarItem.text = `总工时：${summary.totalSpentTime / 3600}h`;
+        if (!this.statusBarItem) {
+          this.statusBarItem = vscode.window.createStatusBarItem(
+            vscode.StatusBarAlignment.Right,
+            999999
+          );
+        }
+        this.statusBarItem.text = `总工时：${summary.totalSpentTime / 3600}h`;
         vscode.window.onDidChangeActiveTextEditor((editor) => {
           if (editor && editor.document.fileName.endsWith("work-diary.md")) {
-            statusBarItem.show();
+            this.statusBarItem.show();
           } else {
-            statusBarItem.hide();
+            this.statusBarItem.hide();
           }
         });
       }
